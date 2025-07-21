@@ -1,0 +1,7 @@
+.datagrid-cell {
+    white-space: normal !important;
+    height: auto !important;
+}
+.tox-tinymce-aux, .tox-menu {
+    z-index: 999999 !important;
+}
