@@ -1,7 +1,6 @@
 <?php
 include 'cauhinh.php';
 include 'save_data.php';
-include 'product_menu.php';
 ?>
 <!DOCTYPE html>
 <html>
@@ -21,8 +20,8 @@ include 'product_menu.php';
     <!-- Sidebar -->
     <div data-options="region:'west',split:true" style="width:200px;">
         <div class="easyui-accordion" data-options="fit:true,border:false">
-            <div title="Title1" data-options="iconCls:'icon-save'">
-                content1
+            <div title="Function" data-options="iconCls:'icon-reload'">
+                <ul id="danduongTrai"></ul>
             </div>
             <div title="Title2" data-options="iconCls:'icon-save'">
                 content2
@@ -230,6 +229,24 @@ include 'product_menu.php';
                     text: 'Import',
                     iconCls: 'icon-import-export',
                     handler: function(){ importItem(); }
+                }
+            ]
+        });
+
+        $('#danduongTrai').tree({
+            data: [
+                {
+                    id: 471,
+                    text: 'Menu Manager',
+                    iconCls: 'icon-category',
+                    state: 'open', // mở rộng
+                    children: [
+                        {
+                            id: 472,
+                            text: 'Add Groups',
+                            iconCls: 'icon-add'
+                        }
+                    ]
                 }
             ]
         });

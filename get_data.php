@@ -7,7 +7,7 @@ header('Content-Type: application/json');
 header("Cache-Control: no-cache, must-revalidate");
 header("Expires: 0");
 
-include 'cauhinh.php';
+include_once 'cauhinh.php';
 
 // Lấy tham số pagination từ EasyUI
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
