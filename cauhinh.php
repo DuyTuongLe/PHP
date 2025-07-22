@@ -25,5 +25,3 @@ try {
     echo "Kết nối thất bại: " . $err->getMessage();
 }
 ?>
-
-vilinh

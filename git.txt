@@ -1,0 +1,44 @@
+Kiểm tra có bao nhiêu nhánh
+git branch
+
+Tạo nhánh
+git branch [tên nhánh]
+
+Xóa nhánh
+git branch -d [ten-nhanh] (-d = delete (chỉ xóa nếu đã được merge vào nhánh khác))
+git branch -D dev1 (-D = force delete (cẩn thận, vì có thể mất code chưa merge!))
+
+git push origin --delete ten-nhanh
+
+Chuyển nhánh
+git checkout [tên nhánh]
+
+Tạo và chuyển nhánh luôn
+git checkout -b [tên nhánh]
+
+Push nhánh mới lên github
+git push -u origin [tên nhánh]
+
+Đẩy code lên lần đầu
+cd /du-an/hinh-chu-nhat
+git init
+git add .
+git commit -m "Tạo file tính HCN"
+git remote add origin https://github.com/tuongduy/hinh-chu-nhat.git
+git push -u origin main
+
+Đẩy code lên github đã đẩy r
+git add .
+git commit -m "comment"
+git push -u origin [tên nhánh]
+
+Gộp dev vào master
+Phải qua master trước
+git checkout master or main
+git merge [tên nhánh]
+git push origin master
+
+Kiểm tra tất cả nhánh đã checkout hay chưa checkout
+git branch -r
+
+
