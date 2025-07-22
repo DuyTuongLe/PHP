@@ -1,5 +1,7 @@
 <?php
 include 'cauhinh.php';
+include 'save_data.php';
+include 'product_menu.php';
 ?>
 <!DOCTYPE html>
 <html>
@@ -30,8 +32,7 @@ include 'cauhinh.php';
 
     <!-- Main Content -->
     <div data-options="region:'center'" class="easyui-layout">
-        <div data-options="region:'west',split:true" style="width:200px;" class="khungbentrai">
-            
+        <div id="westPanel" data-options="region:'west',split:true" style="width:200px;">
         </div>
         <div data-options="region:'center'">
             <table id="dg" class="easyui-datagrid">
@@ -47,6 +48,26 @@ include 'cauhinh.php';
         </div>
     </div>
     <script>
+
+    function doSearch(value, name){
+        // value là giá trị người dùng nhập
+        // name là tên trường search, có thể cấu hình thêm
+        var keywordSlug = removeVietnameseAndSlug(value);
+
+        $('#search').datagrid('load', {
+            search: keywordSlug
+        });
+    }
+
+    function removeVietnameseAndSlug(str) {
+        str = str.toLowerCase();
+        str = str.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        str = str.replace(/đ/g, 'd');
+        str = str.replace(/\s+/g, '-');
+        return str;
+    }
+
+
     $(function(){
         let editIndex = undefined;
         $('#dg').datagrid({
@@ -212,6 +233,28 @@ include 'cauhinh.php';
                 }
             ]
         });
+
+        $('#westPanel').panel({
+            title: 'Category / Menu',
+            tools: [{
+                iconCls: 'icon-reload',
+                handler: function(){
+                    $('#westPanel').panel('refresh');
+                }
+            }],
+            content: `
+                <div class="ProductsCategorySearch" style="padding:2px;">
+                    <input id="ProductsCategorySearch" class="easyui-searchbox" style="width:100%;" 
+                    data-options="prompt:'Search Products (F4)', searcher:doSearch">
+                </div>
+                <div class="ProductsCategoryList tree">
+                </div>
+            `
+        });
+
+
+
+
         $(document).keydown(function(e) {
             if (e.keyCode == 113) { // F2 - Add
                 e.preventDefault();
@@ -296,8 +339,6 @@ include 'cauhinh.php';
         }
         $('#tinyWindow').window('close');
     }
-
-
 
     function reloadGrid() { $('#dg').datagrid('reload'); }
     function addItem() {
