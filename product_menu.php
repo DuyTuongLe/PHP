@@ -15,28 +15,31 @@ function getDanhSachDanDuong($conn) {
     $stmt->execute();
     return $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
+function buildTree($elements, $parentId = 0) {
+    $branch = [];
 
-// Lấy dữ liệu
+    foreach ($elements as $element) {
+        if ($element['goc_id'] == $parentId) {
+            $children = buildTree($elements, $element['danduong_id']); // đệ quy
+            $node = [
+                'id' => $element['danduong_id'], 
+                'text' => $element['tieude']
+            ];
+            if ($children) {
+                $node['children'] = $children;
+            }
+            $branch[] = $node;
+        }
+    }
+
+    return $branch;
+}
+
 $danduongList = getDanhSachDanDuong($conn);
+
+// Xây cây bắt đầu từ node gốc (ví dụ: id = 3)
+$tree = buildTree($danduongList, 0);
+
 ?>
 
-<h2>Danh sách Dẫn Đường</h2>
-<table id="dg" class="easyui-datagrid">
-    <thead>
-         <tr>
-            <th field="id" width="50">ID</th>
-            <th field="hash" width="150">Tieuu đề</th>
-            <th field="ten" width="300">Kiểu</th>
-            <th field="mota" width="300">Gốc id</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php foreach ($danduongList as $item): ?>
-            <tr>
-                <td><?php echo htmlspecialchars($item['danduong_id']); ?></td>
-                <td><?php echo htmlspecialchars($item['tieude']); ?></td>
-                <td><?php echo htmlspecialchars($item['kieu']); ?></td>
-                <td><?php echo htmlspecialchars($item['goc_id']); ?></td>
-            </tr>
-        <?php endforeach; ?>
-</table>
+    
